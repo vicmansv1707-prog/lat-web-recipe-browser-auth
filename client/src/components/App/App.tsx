@@ -9,6 +9,9 @@ import FavoritesPage from "../../pages/FavoritesPage";
 import RecipePage from "../../pages/RecipePage";
 import NotFoundPage from "../../pages/NotFoundPage";
 import "./App.css";
+import LoginPage from "../../pages/LoginPage";
+import RegisterPage from "../../pages/RegisterPage";
+import { ProtectedRoute, PublicRoute } from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -38,12 +41,18 @@ function App() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={homeContent()} />
-        <Route
-          path="/favorites"
-          element={<FavoritesPage recipes={recipes} />}
-        />
-        <Route path="/recipes/:id" element={<RecipePage recipes={recipes} />} />
+        <Route element={<ProtectedRoute />}>  
+          <Route
+            path="/favorites"
+            element={<FavoritesPage recipes={recipes} />}
+          />
+          <Route path="/recipes/:id" element={<RecipePage recipes={recipes} />} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
+        <Route element={<PublicRoute />}> 
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
       </Route>
     </Routes>
   );

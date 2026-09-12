@@ -11,3 +11,15 @@ export type Recipe = {
   content: string;
   likes: string[];
 };
+
+export type CurrentUser = {
+  _id: string;
+  email: string;
+};
+
+export type AuthContextValue = {
+  currentUser: CurrentUser | null;
+  isAuthenticated: boolean;
+  login: (token: string, user: CurrentUser) => void;
+  logout: () => void;
+};
